@@ -1,0 +1,26 @@
+﻿@model string
+
+<form id="emailForm">
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+        <button type="submit">Verify</button>
+    </div>
+</form>
+
+<div id="result"></div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#emailForm').submit(function(e) {
+                e.preventDefault();
+
+                var email = $('#email').val();
+            
+                $.ajax({
+                    url: '@Url.Action("Verify", "Email")',
+
+                       </script>
+}
+                

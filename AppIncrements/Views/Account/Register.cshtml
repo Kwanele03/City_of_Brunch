@@ -1,0 +1,57 @@
+﻿@using AppIncrements.Data.ViewModels
+@model RegisterVM
+
+@{
+    ViewData["Title"] = "Sign up for a new account";
+}
+
+<div class="container">
+    <h4>@ViewData["Title"]</h4>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            <b>Sorry!</b> - @TempData["Error"]
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form asp-action="Register" class="needs-validation" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="FullName" class="control-label">Full Name</label>
+                    <input asp-for="FullName" class="form-control" placeholder="Enter your full name" required />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EmailAddress" class="control-label">Email Address</label>
+                    <input asp-for="EmailAddress" class="form-control" placeholder="Enter your email address" required />
+                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label">Password</label>
+                    <input asp-for="Password" class="form-control" type="password" placeholder="Create password" required />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword" class="control-label">Confirm Password</label>
+                    <input asp-for="ConfirmPassword" class="form-control" type="password" placeholder="Confirm password" required />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <br/>
+
+                <div class="form-group">
+                    <button class="btn btn-primary float-right" type="submit">Sign up</button>
+                    <a class="btn btn-secondary" asp-controller="Home" asp-action="Index">Cancel</a>
+
+                    <hr/>
+                     <div class="signup-link">Already have an account? <a href="https://localhost:7100/Account/Login"@* asp-all-route-data="true" asp-controller="Account" asp-action="Login"*@>Login</a></div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

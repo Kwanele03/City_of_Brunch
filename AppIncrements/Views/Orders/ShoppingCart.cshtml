@@ -1,0 +1,131 @@
+﻿@using AppIncrements.Data.ViewModels;
+@model ShoppingCartVM
+@{
+    ViewData["Title"] = "Shopping cart summary";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="text-center">
+            <h2>Your Shopping Cart</h2>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Quantity</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ShoppingCart.ShoppingCartItems)
+                {
+                    <tr>
+                        <td class="align-middle">@item.Amount</td>
+                        <td class="align-middle">@item.Product.Item</td>
+                        <td class="align-middle">@item.Product.Price.ToString("C", new System.Globalization.CultureInfo("en-ZA"))</td>
+                        <td class="align-middle">@((item.Amount * item.Product.Price).ToString("C", new System.Globalization.CultureInfo("en-ZA")))</td>
+                        <td class="align-middle">
+                            <a class="btn btn-danger btn-sm" asp-controller="Orders" asp-action="RemoveItemFromShoppingCart" asp-route-id="@item.Product.Id">
+                                <i class="bi bi-cart-dash"></i> Remove
+                            </a>
+                            <a class="btn btn-success btn-sm" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@item.Product.Id">
+                                <i class="bi bi-cart-plus"></i> Add
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3"></td>
+                    <td><b>Total:</b></td>
+                    <td>@Model.ShoppingCartTotal.ToString("C", new System.Globalization.CultureInfo("en-ZA"))</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="text-right">
+            <div class="btn-group">
+              
+
+                <div id="paypal-btn"></div>
+                 <ul>
+                    </ul>
+                     <ul>
+                    </ul>
+                     <ul>
+                    </ul>
+                     <ul>
+                    </ul>
+                     <ul>
+                    </ul>
+                     <ul>
+                    </ul>
+                     <ul>
+                    </ul>
+                     <ul>
+                    </ul>
+                     <ul>
+                    </ul>
+                     <ul>
+                    </ul>
+                     <ul>
+                    </ul>
+                     <ul>
+                    </ul>
+
+                 <div class="float-right">
+                <a class="btn btn-primary" asp-controller="Product" asp-action="Index">
+                    Continue Shopping
+                </a>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+    <script>
+        let _total = @Html.Raw(Model.ShoppingCartTotal);
+        paypal.Button.render({
+            //Configure environment
+            env: 'sandbox',
+            client: {
+                sandbox: 'AcKRtgL4i68EZ2ZYuYUx3ilihAg2YhL5dtF_m19A8MjBWVOn6ewNS4M_uV8gA3xi98zTcUq38gUHbVFx'
+            },
+            //Customize button
+            locale: 'en_US',
+            style: {
+                size: 'small',
+                color: 'gold',
+                shape: 'pill'
+            },
+            commit: true,
+            //Set up a payment
+            payment: function (data, actions) {
+                return actions.payment.create({
+                    transactions: [{
+                        amount: {
+                            total: _total,
+                            currency: 'ZAR'
+                        }
+                    }]
+                });
+            },
+            //Execute the payment
+            onAuthorize: function (data, actions) {
+                return actions.payment.execute().then(function () {
+                    var url = '@Url.Action("CompleteOrder", "Orders", new { })';
+                    window.location.href = url;
+                });
+            }
+        }, '#paypal-btn')
+    </script>
+}

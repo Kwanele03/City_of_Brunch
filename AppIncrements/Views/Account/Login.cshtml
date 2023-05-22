@@ -1,0 +1,52 @@
+﻿@using AppIncrements.Data.ViewModels   
+@model LoginVM
+
+@{
+    ViewData["Title"] = "Log in to your account";
+}
+
+<div class="container">
+    <h4>@ViewData["Title"]</h4>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            <b>Sorry!</b> - @TempData["Error"]
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form asp-action="Login" class="needs-validation" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="EmailAddress" class="control-label">Email Address</label>
+                    <input asp-for="EmailAddress" class="form-control" placeholder="Enter your email address" required />
+                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label">Password</label>
+                    <input asp-for="Password" class="form-control" type="password" placeholder="Enter your password" required />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <br/>
+
+                <div class="form-group">
+                    <button  class="btn btn-primary btn-block" type="submit">Log in</button>
+                    <a class="btn btn-secondary" asp-controller="Home" asp-action="Index">Cancel</a>
+                </div>
+                 <ul>
+                    </ul>
+                      
+                <div class="form-group">
+                    <a class="forgot-password-link" href="https://localhost:7100/Account/ForgotPassword">Forgot Password?</a>
+                </div>
+            </form>
+                <hr/>
+                 
+                <div class="signup-link">Don't' have an account yet? <a href="https://localhost:7100/Account/Register">Register</a></div>
+                 
+        </div>
+    </div>
+</div>
