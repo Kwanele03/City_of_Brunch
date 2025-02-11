@@ -12,11 +12,6 @@ namespace AppIncrements.Controllers
         {
             _service = service;
         }
-        //public async Task<IActionResult> Index()
-        //{
-        //    var data = await _service.GetAllAsync();
-        //    return View(data);
-        //}
 
         [AllowAnonymous]
         public async Task<IActionResult> Filter(string searchString)
@@ -42,7 +37,7 @@ namespace AppIncrements.Controllers
             return View(data);
         }
 
-        //Get: Actors/Create
+        
         public IActionResult Create()
         {
             return View();
@@ -58,8 +53,7 @@ namespace AppIncrements.Controllers
             await _service.AddAsync(product);
             return RedirectToAction(nameof(Index));
         }
-
-        //Get: Actors/Details/1
+        
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
@@ -68,8 +62,7 @@ namespace AppIncrements.Controllers
             if (productDetails == null) return View("NotFound");
             return View(productDetails);
         }
-
-        //Get: Actors/Edit/1
+        
         public async Task<IActionResult> Edit(int id)
         {
             var actorDetails = await _service.GetByIdAsync(id);
@@ -89,7 +82,6 @@ namespace AppIncrements.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //Get: Actors/Delete/1
         public async Task<IActionResult> Delete(int id)
         {
             var productDetails = await _service.GetByIdAsync(id);
